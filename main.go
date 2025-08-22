@@ -1,0 +1,5 @@
+package goim
+
+func main() {
+
+}
