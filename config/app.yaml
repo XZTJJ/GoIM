@@ -1,0 +1,8 @@
+db:
+  mysql:
+    user: root
+    password: '123456'
+    database: xiaohaizi
+    host: 192.168.101.74
+    port: '3306'
+    metaUrl: charset=utf8mb4&parseTime=True&loc=Local

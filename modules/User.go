@@ -1,7 +1,12 @@
 package modules
 
-import "gorm.io/gorm"
+import (
+	"time"
 
+	"gorm.io/gorm"
+)
+
+// 用户相关信息类
 type User struct {
 	gorm.Model
 	Name          string
@@ -10,10 +15,15 @@ type User struct {
 	Email         string
 	Identity      string
 	ClientIp      string
-	ClinentPort   uint32
-	LoginTime     uint64
+	ClientPort    uint32
+	LoginTime     time.Time
 	HeartbeatTime uint64
-	LogoutTime    uint64
+	LoginOutTime  time.Time `grom:"column:login_outtime"`
 	IsLogout      bool
 	DeviceInfo    string
+}
+
+// 数据库对应的表名
+func (u *User) TableName() string {
+	return "go_user_info"
 }
