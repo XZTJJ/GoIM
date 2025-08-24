@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"com.zhouhc/goim/modules"
+	"com.zhouhc/goim/model"
 	"com.zhouhc/goim/utils"
 )
 
@@ -15,7 +15,7 @@ func TestGorm(t *testing.T) {
 		fmt.Printf("数据库初始化失败, %v\n", err1)
 		panic("测试失败")
 	}
-	user := modules.User{}
+	user := model.User{}
 	db.Find(&user)
 	fmt.Println(user)
 	if user.Name == "" {

@@ -2,13 +2,16 @@ package utils
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 // 初始化MySQL
@@ -65,6 +68,16 @@ func GetMySQLConnect() (*gorm.DB, error) {
 	host := config.GetString("db.mysql.host")
 	port := config.GetString("db.mysql.port")
 	metaUrl := config.GetString("db.mysql.metaUrl")
-	mysqlUrl := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?%s", user, password, host, port, database, metaUrl)
-	return gorm.Open(mysql.Open(mysqlUrl), &gorm.Config{})
+	mysqlUrl := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?%s", user, password,
+		host, port, database, metaUrl)
+	//配置SQL相关日志信息，只是针对SQL
+	newLogger := logger.New(
+		log.New(os.Stdout, string(filepath.Separator), log.LstdFlags),
+		logger.Config{
+			SlowThreshold: time.Second, //慢SQL阈值
+			LogLevel:      logger.Info, //日志级别
+			Colorful:      true,        //日志颜色
+		})
+	return gorm.Open(mysql.Open(mysqlUrl),
+		&gorm.Config{Logger: newLogger})
 }

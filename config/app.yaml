@@ -3,6 +3,6 @@ db:
     user: root
     password: '123456'
     database: xiaohaizi
-    host: 192.168.101.74
+    host: 192.168.101.76
     port: '3306'
     metaUrl: charset=utf8mb4&parseTime=True&loc=Local
